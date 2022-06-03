@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>SMU-IT-CHATBOT</title>
+    <link rel="stylesheet" href="{%static 'chatbot_app/chatbot_css.css'%}">
+</head>
+
+<body style="height: 100%; z-index: 2;">
+  <nav>
+    <ul class = "nav-con">
+      <li class="nav-item"> <a href="http://smu-it-chatbot.com/">K3SI</a></li>
+      <div class="block" style="height: 2vh;"></div>
+      <li class="nav-item" onclick="change1()"> <b href="">챗봇설명</b></li>
+      <div class="block"></div>
+      <li class="nav-item" onclick="newsChange(0)"> <b href="">주간기술</b></li>
+      <div class="block"></div>
+      <li class="nav-item" onclick="newsChange(1)"> <b href="">구글뉴스</b></li>
+      <div class="block"></div>
+      <div style="margin-left: 1vw;">
+      <form action="http://www.google.com/" method="GET" target="_blank" style="background-color: #263A77;">
+        <table>
+        <tr>
+        <td>
+        <input type = text id="searchWord" name = search size = 17 maxlength = 255 value = "" placeholder="Google 검색" style=" height: 1.8vw; font-size: 1.8vh; max-width: 7vw;"  />
+        <input type = submit name = button value = "검색" style="max-width: calc(100% -7vw); height: 2.1vw; font-size: 1.8vh;" onclick="searchGoogle()"/>
+        </td>
+        </tr>
+        </table>
+        </form>
+      </div>
+      <div class="block" style="height: 10vh;"></div>
+      <li class= "img"><a href="https://www.smu.ac.kr/ko/index.do" target="_blank()"><img class="img_class" src="{% static 'chatbot_app/logo-removebg-preview.png' %}"></a></li>
+    </ul>
+  </nav> 
+  <div class="total">
+    <div class="chatbox" style="width:57vw; margin: 0.45vw; height: 82vh; overflow-y: scroll; overflow-x: hidden; border-radius: 0.4vw; font-size: 1vh;" id="chatbox">
+      <div class="bottext" >안녕하세요 SMU IT챗봇입니다.<br/> IT정보를 제공해 드립니다.<br/>처음에 지연시간이 발생할 수 있으니 <br/>양해바랍니다.</div>
+      <div class="block" style="height: 21vh; background-color: #FFF;"></div>
+      <div class="bottext" >IT정보에 대해 궁금하신점이 있으면 물어보세요.</div>
+      <div class="block" style="height: 14vh; background-color: #FFF;"></div>
+    </div>
+    <div style="margin-left:0.45vw; margin-right: 0.45vw; top: 0;">
+        <textarea id="chattext" class="textarea" autofocus cols="50" rows="5" style="font-size: 1vw; padding:0.3vw; width: 84%; height:9vh; border: 0px #000; border-radius: 0.4vw;" placeholder="메시지를 입력하세요" onkeypress="if(event.keyCode==13){ sendAsk(); this.value=''; return false;}else if(event.keyCode==10){ this.value+='\n'; }"></textarea>
+        <button style="padding:10px 0; position: absolute; left:85.5%;width: 14%;height:10.3vh; border-radius: 0.4vw; font-size: 1.2vw;" onclick="sendAsk(); clear_input();">SEND</button>
+    </div>
+  </div>
+  <div id="myModal1" class="modal-content" style="position: fixed; left: 14.5vw; top: 16.5vh; border-radius:0.4vw; padding: 2vh;">
+    <b class="text2"><b class="text">목적</b> <br/> 최근, 인공지능기술을 응용하는 대화형 시스템과 챗봇의 개발이 활발해지고 있습니다.<br/>
+     특히, 음성,메시지, 챗봇등을 통해 고객에게 서비스를 제공하는 메시지 어플리케이션의<br/> 활용이 증가하고 있습니다.<br/>
+     IT 기술 관련 정보를 쉽게 찾을 수 있도록 정보를 제공해주는 챗봇 서비스입니다.<br/></br>
+    <b class="text">팀 구성 </b> <br/> 김영민, 김상우, 이범희, 손성윤, 김민균<br/></b>
+          <div style="cursor:pointer; border-radius: 0.4vw;background-color:#4095CB; position: relative; left: 80%; text-align: center; max-width: 20%;  padding-bottom: 10px;padding-top: 10px;" onClick="close_pop1();">
+              <span class="pop_bt" style="font-size: 2.2vh; color:honeydew ;" >
+                   닫기
+              </span>
+          </div>
+    </div>
+    <!--옆면-->
+    <div class="rightside">
+      <div class="inside" id="upPage" style="z-index: 3;">
+        <div class="block" style="background-color: white; border-radius: 1vh; height: 2vh;"></div>
+        <table class="list_table">
+          <tr class="list"> 
+            <div id="week_block">
+              <a href="{{week_trend1|last}}" target="_blank()"><div class="list_title">{{week_trend1|first}}</div></a>
+              {% for sub in week_trend1|slice:"1:5" %}
+                <div class="list_value">{{sub}}</div>
+              {% endfor %}
+            </div>
+          </tr>
+          <tr class="list"> 
+            <div id="week_block">
+              <a href="{{week_trend2|last}}" target="_blank()"><div class="list_title">{{week_trend2|first}}</div></a>
+              {% for sub in week_trend2|slice:"1:5" %}
+                <div class="list_value">{{sub}}</div>
+              {% endfor %}
+            </div>
+          </tr>
+          <tr class="list"> 
+            <div id="week_block">
+              <a href="{{week_trend3|last}}" target="_blank()"><div class="list_title">{{week_trend3|first}}</div></a>
+              {% for sub in week_trend2|slice:"1:5" %}
+                <div class="list_value">{{sub}}</div>
+              {% endfor %}
+            </div>
+          </tr>    
+      </table>
+      </div>
+        <div class="inside" id="downPage" style="z-index: 0;">
+          <div class="block" style="background-color: white; border-radius: 1vh; height: 2vh;"></div>
+          <table class="list_table" style=" height: 100%;">
+            <tr class="list">
+              <div class="list_block" id="news_block">
+                <a class="news_href" href="" target="_blank()"><div class="list_title_news"></div></a>
+                <span class="list_value_news" ></span>
+                <span class="list_value_news"></span>
+              </div>
+            </tr>
+            <tr class="list">
+              <div class="list_block" id="news_block">
+                <a class="news_href" href="" target="_blank()"><div class="list_title_news"></div></a>
+                <span class="list_value_news" ></span>
+                <span class="list_value_news"></span>
+              </div>
+            </tr>
+            <tr class="list">
+              <div class="list_block" id="news_block">
+                <a class="news_href" href="" target="_blank()"><div class="list_title_news"></div></a>
+                <span class="list_value_news" ></span>
+                <span class="list_value_news"></span>
+              </div>
+            </tr>
+            <tr class="list">
+              <div class="list_block" id="news_block">
+                <a class="news_href" href="" target="_blank()"><div class="list_title_news"></div></a>
+                <span class="list_value_news" ></span>
+                <span class="list_value_news"></span>
+              </div>
+            </tr>
+            <tr class="list">
+              <div class="list_block" id="news_block">
+                <a class="news_href" href="" target="_blank()"><div class="list_title_news"></div></a>
+                <span class="list_value_news" ></span>
+                <span class="list_value_news"></span>
+              </div>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-latest.js"></script>
+    <script>
+
+    function getCookie(name){
+      var cookieValue =null;
+      if(document.cookie && document.cookie !== ''){
+        var cookies = document.cookie.split(';');
+        for (var i=0;i<cookies.length; i++){
+          var cookie = jQuery.trim(cookies[i]);
+          if(cookie.substring(0, name.length+1)===(name + '=')){
+            cookieValue = decodeURIComponent(cookie.substring(name.length+1));
+            break;
+          }
+        }
+      }
+      return cookieValue;
+
+    }
+    
+    var csrftoken = getCookie('csrftoken');
+    let obj_code=0;
+    var xhr;
+
+    function chatTrain(){
+      var strurl = "chattrain";
+   
+      xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = function(){
+        if (xhr.readyState ==4){
+          var data =xhr.responseText;
+
+          var obj = JSON.parse(data);
+          
+        }
+      }
+      xhr.open("Get", strurl);
+      xhr.setRequestHeader("X-CSRFToken", csrftoken);
+      xhr.send(null);
+    }
+
+    function sendAsk(){
+      chattext=document.getElementById("chattext").value;
+      if(chattext==""){
+        document.getElementById("chattext").focus();
+        return false;
+      }
+      
+      addtext = "<div class='chattext'><span>" +chattext + "</span></div>"
+      
+      document.getElementById("chatbox").innerHTML += addtext;
+      document.getElementById("chatbox").innerHTML += "<div class=\"clear\">\n"+"</div>";
+   
+    
+      var strurl = "chatanswer?chattext=" + chattext;
+
+      xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = function(){
+        if (xhr.readyState ==4){
+          var data =xhr.responseText;
+
+          var obj = JSON.parse(data);
+          
+          bottext = "<div class='bottext'><span>"+obj.res1+"</span></div>";
+          document.getElementById("chatbox").innerHTML += bottext;
+          document.getElementById("chatbox").innerHTML += "<div class=\"clear\">\n"+"</div>";
+
+          
+          if(obj.res2!=""){          
+            bottext = "<div class='bottext'><span>"+obj.res2+"</span></div>";
+            document.getElementById("chatbox").innerHTML += bottext;
+            document.getElementById("chatbox").innerHTML += "<div class=\"clear\">\n"+"</div>";
+            
+            if(obj.news!==null){
+              bottext = "<div class='bottext'>"+"답변에 관련된 URL"+"<br/>"+"<a href='' target = '_blank()' class='res3'>"+obj.res3+"</a></div>";
+              document.getElementById("chatbox").innerHTML += bottext;
+              document.getElementById("chatbox").innerHTML += "<div class=\"clear\">\n"+"</div>";
+              document.querySelector('.res3').href=obj.res3;
+              obj_code=1;
+              newsDisplay(obj.news);
+            }
+            else{
+              bottext = "<div class='bottext'><span>"+obj.res3+"</span></div>";
+              document.getElementById("chatbox").innerHTML += bottext;
+              document.getElementById("chatbox").innerHTML += "<div class=\"clear\">\n"+"</div>";
+            }
+          }
+          document.getElementById('chatbox').scrollTop = document.getElementById("chatbox").scrollHeight;
+        }
+      }
+      
+      xhr.open("Get", strurl);
+      xhr.setRequestHeader("X-CSRFToken", csrftoken);
+      xhr.send(null);
+
+      document.getElementById('chatbox').scrollTop = document.getElementById("chatbox").scrollHeight;
+
+    }
+
+    function clear_input(){
+	    var e = document.getElementsByClassName("textarea")
+	    for(var i = 0; i < e.length; i++){
+  		e[i].value ='';
+      }
+    }
+
+    function show () {
+      document.querySelector(".background").className = "background show";
+    }
+
+    function close () { 
+      document.querySelector(".background").className = "background";
+    }
+
+    // document.querySelector("#show").addEventListener('click', show);
+    // document.querySelector("#close").addEventListener('click', close);
+
+    var code1=0;
+    var code2=0;
+
+    function change1(){
+      if(code1!=1){
+        open_pop1()
+        code1=1;
+      }
+      else{
+        close_pop1()
+        code1=0;
+      }
+    }
+
+    function change2(){
+      if(code2!=1){
+        open_pop2()
+        code2=1;
+      }
+      else{
+        close_pop2()
+        code2=0;
+      }
+    } 
+    function newsDisplay(news_value){
+      let title = document.querySelectorAll(".list_title_news");
+      let value = document.querySelectorAll(".list_value_news");
+      let n_link = document.querySelectorAll(".news_href");
+      let nlength = news_value.title.length;
+      for( let i=0;i<nlength;i++)
+      {
+        title[i].innerHTML=news_value.title[i];
+        n_link[i].href=news_value.link[i];
+        value[2*i].innerHTML= (news_value.date[i]==="") ?  null: news_value.date[i] ;
+        value[2*i+1].innerHTML=news_value.agency[i];
+      }
+      if(nlength<5)
+        {
+          let gap = 5 - nlength;
+          for(let i=0;i<gap;i++)
+          {
+            title[nlength+i].style.backgroundColor="#fff";
+          }
+        }
+      newsChange(1);
+    }
+      function newsChange(num){
+        const down = document.querySelectorAll('#downPage');
+        const up = document.querySelectorAll('#upPage');
+        if(num===1)
+        {
+            if(obj_code===1){
+              $('#downPage').show();
+              $('#upPage').hide();
+            }
+            else{
+            document.getElementById("chatbox").innerHTML += "<div class=\"clear\">\n"+"</div>";
+            bottext = "<div class='bottext'>"+"먼저 키워드 검색을 진행해주십시오"+"</div>";
+            document.getElementById("chatbox").innerHTML += bottext;
+            document.getElementById("chatbox").innerHTML += "<div class=\"clear\">\n"+"</div>";
+            document.getElementById('chatbox').scrollTop = document.getElementById("chatbox").scrollHeight;
+          }
+        }
+        else{
+          $('#downPage').hide();
+          $('#upPage').show();
+        }
+      }
+
+      function open_pop1(flag) {
+              $('#myModal1').show();
+      };
+      //팝업 Close 기능
+      function close_pop1(flag) {
+           $('#myModal1').hide();
+      };
+      function open_pop2(flag) {
+              $('#myModal2').show();
+      };
+      //팝업 Close 기능
+      function close_pop2(flag) {
+           $('#myModal2').hide();
+      };
+      
+      $(document).ready(function(){
+        $("a[href^='http']").attr('target','_blank');
+      });
+      function searchGoogle(){
+        const text= document.querySelector('#searchWord').value;
+        const mainUrl="https://www.google.com/search?q=";
+        window.open(mainUrl+text);
+       
+      }
+    </script>
+</body>
+</html>

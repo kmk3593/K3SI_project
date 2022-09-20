@@ -4,7 +4,8 @@
 - 작업툴 : `Pycharm`
 - 서버 : `AWS EC2`
 - DB : `AWS RDS`
-- 사용 라이브러리 : `KoNLPy`, `json`, `requests`, `BeautifulSoup`, `django`, `MeCab`
+- 프레임워크 : `django`
+<!-- - 사용 라이브러리 : `KoNLPy`, `json`, `requests`, `BeautifulSoup`, `django`, `MeCab` -->
 - 인원 : 5명
 - 기간 : 2021.01.08 - 2022.09.26
 - 내용 : 챗봇 등을 통해 고객에게 서비스를 제공하는 메시지 어플리케이션의 활용이 증가하였음을 참고하여 비전공자들이 IT 기술에 대한 정보를 쉽게 찾을 수 있도록 지원하려는 의도로 프로젝트를 진행
